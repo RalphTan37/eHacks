@@ -144,5 +144,3 @@ class WordBasketGame:
 root = tk.Tk()
 game = WordBasketGame(root)
 root.mainloop()
-
-root.mainloop()
