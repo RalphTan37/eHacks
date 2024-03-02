@@ -1,5 +1,6 @@
+
 import tkinter as tk
-from tkinter import messagebox, Label, Button
+from tkinter import messagebox, Label, Button,Entry
 import random
 
 
@@ -24,10 +25,22 @@ class WordBasketGame:
             master, text="Score: 0", font=('Helvetica', 16))
         self.score_label.grid(row=0, column=0, columnspan=5)
 
+        self.highscore = 0
+        self.highscore_label = Label(
+            master, text="Highest Score: 0", font=('Helvetica', 16))
+        self.highscore_label.grid(row=0, column = 3, columnspan=5)
+
         self.next_letter = self.generate_alphabet_ball()  # Next letter to be placed
         self.next_letter_label = Label(
             master, text=f"Next Letter: {self.next_letter}", font=('Helvetica', 16), fg="blue")
         self.next_letter_label.grid(row=2, column=0, columnspan=5)
+
+        self.duration_label = Label(
+            master, text="Set time (seconds): ", font=('Helvetica',16))
+        self.duration_label.grid(row=4, column = 0, columnspan = 1)
+        self.duration_entry = Entry(master, font=('helvetica', 16))
+        self.duration_entry.grid(row=4, column= 1, columnspan=1)
+
 
         self.time_left = 0  # To be set by player
         self.timer_label = Label(
@@ -42,7 +55,16 @@ class WordBasketGame:
         self.start_button.grid(row=5, column=0, columnspan=5)
 
     def start_game(self, duration):
+
+        try:
+            duration = int(self.duration_entry.get())
+        except ValueError:
+            messagebox.showwarning("Invalid Input", "Please enter a valid number for the duration.")
+            return
+
         self.time_left = duration
+        if(self.highscore < self.score):
+            self.highscore = self.score
         self.score = 0
         self.game_running = True
         # Generate a new letter for the start
@@ -101,6 +123,7 @@ class WordBasketGame:
             self.basket_labels[i]["text"] = "\n".join(
                 basket)  # Update basket labels
         self.score_label["text"] = f"Score: {self.score}"  # Update score
+        self.highscore_label["text"] = f"Highest Score {self.highscore}"
         # Show the next letter to be placed
         self.next_letter_label["text"] = f"Next Letter: {self.next_letter}"
         minutes, seconds = divmod(self.time_left, 60)
@@ -120,4 +143,6 @@ class WordBasketGame:
 
 root = tk.Tk()
 game = WordBasketGame(root)
+root.mainloop()
+
 root.mainloop()
