@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from tkinter import messagebox, Label, Button,Entry
 import random
@@ -83,7 +82,8 @@ class WordBasketGame:
             self.update_display()
 
     def generate_alphabet_ball(self):
-        return random.choice("abcdefghijklmnopqrstuvwxyz")
+        letters = "aeiou" * 2 + "bcdfghjklmnpqrstvwxyz"
+        return random.choice(letters)
 
     def check_for_word(self, basket_index):
         if len(self.baskets[basket_index]) == 5:
